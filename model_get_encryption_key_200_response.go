@@ -13,6 +13,7 @@ package lockally
 
 import (
 	"encoding/json"
+	"time"
 )
 
 // checks if the GetEncryptionKey200Response type satisfies the MappedNullable interface at compile time
@@ -26,6 +27,11 @@ type GetEncryptionKey200Response struct {
 	EncryptedPrivateKey *string `json:"encrypted_private_key,omitempty"`
 	KdfParams map[string]interface{} `json:"kdf_params,omitempty"`
 	Version *int32 `json:"version,omitempty"`
+	CreatedAt *time.Time `json:"created_at,omitempty"`
+	RotatedAt *time.Time `json:"rotated_at,omitempty"`
+	HasRecovery *bool `json:"has_recovery,omitempty"`
+	RecoverySetAt *time.Time `json:"recovery_set_at,omitempty"`
+	RecoveryBlob *string `json:"recovery_blob,omitempty"`
 }
 
 // NewGetEncryptionKey200Response instantiates a new GetEncryptionKey200Response object
@@ -237,6 +243,166 @@ func (o *GetEncryptionKey200Response) SetVersion(v int32) {
 	o.Version = &v
 }
 
+// GetCreatedAt returns the CreatedAt field value if set, zero value otherwise.
+func (o *GetEncryptionKey200Response) GetCreatedAt() time.Time {
+	if o == nil || IsNil(o.CreatedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.CreatedAt
+}
+
+// GetCreatedAtOk returns a tuple with the CreatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetEncryptionKey200Response) GetCreatedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.CreatedAt) {
+		return nil, false
+	}
+	return o.CreatedAt, true
+}
+
+// HasCreatedAt returns a boolean if a field has been set.
+func (o *GetEncryptionKey200Response) HasCreatedAt() bool {
+	if o != nil && !IsNil(o.CreatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetCreatedAt gets a reference to the given time.Time and assigns it to the CreatedAt field.
+func (o *GetEncryptionKey200Response) SetCreatedAt(v time.Time) {
+	o.CreatedAt = &v
+}
+
+// GetRotatedAt returns the RotatedAt field value if set, zero value otherwise.
+func (o *GetEncryptionKey200Response) GetRotatedAt() time.Time {
+	if o == nil || IsNil(o.RotatedAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.RotatedAt
+}
+
+// GetRotatedAtOk returns a tuple with the RotatedAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetEncryptionKey200Response) GetRotatedAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.RotatedAt) {
+		return nil, false
+	}
+	return o.RotatedAt, true
+}
+
+// HasRotatedAt returns a boolean if a field has been set.
+func (o *GetEncryptionKey200Response) HasRotatedAt() bool {
+	if o != nil && !IsNil(o.RotatedAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetRotatedAt gets a reference to the given time.Time and assigns it to the RotatedAt field.
+func (o *GetEncryptionKey200Response) SetRotatedAt(v time.Time) {
+	o.RotatedAt = &v
+}
+
+// GetHasRecovery returns the HasRecovery field value if set, zero value otherwise.
+func (o *GetEncryptionKey200Response) GetHasRecovery() bool {
+	if o == nil || IsNil(o.HasRecovery) {
+		var ret bool
+		return ret
+	}
+	return *o.HasRecovery
+}
+
+// GetHasRecoveryOk returns a tuple with the HasRecovery field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetEncryptionKey200Response) GetHasRecoveryOk() (*bool, bool) {
+	if o == nil || IsNil(o.HasRecovery) {
+		return nil, false
+	}
+	return o.HasRecovery, true
+}
+
+// HasHasRecovery returns a boolean if a field has been set.
+func (o *GetEncryptionKey200Response) HasHasRecovery() bool {
+	if o != nil && !IsNil(o.HasRecovery) {
+		return true
+	}
+
+	return false
+}
+
+// SetHasRecovery gets a reference to the given bool and assigns it to the HasRecovery field.
+func (o *GetEncryptionKey200Response) SetHasRecovery(v bool) {
+	o.HasRecovery = &v
+}
+
+// GetRecoverySetAt returns the RecoverySetAt field value if set, zero value otherwise.
+func (o *GetEncryptionKey200Response) GetRecoverySetAt() time.Time {
+	if o == nil || IsNil(o.RecoverySetAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.RecoverySetAt
+}
+
+// GetRecoverySetAtOk returns a tuple with the RecoverySetAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetEncryptionKey200Response) GetRecoverySetAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.RecoverySetAt) {
+		return nil, false
+	}
+	return o.RecoverySetAt, true
+}
+
+// HasRecoverySetAt returns a boolean if a field has been set.
+func (o *GetEncryptionKey200Response) HasRecoverySetAt() bool {
+	if o != nil && !IsNil(o.RecoverySetAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoverySetAt gets a reference to the given time.Time and assigns it to the RecoverySetAt field.
+func (o *GetEncryptionKey200Response) SetRecoverySetAt(v time.Time) {
+	o.RecoverySetAt = &v
+}
+
+// GetRecoveryBlob returns the RecoveryBlob field value if set, zero value otherwise.
+func (o *GetEncryptionKey200Response) GetRecoveryBlob() string {
+	if o == nil || IsNil(o.RecoveryBlob) {
+		var ret string
+		return ret
+	}
+	return *o.RecoveryBlob
+}
+
+// GetRecoveryBlobOk returns a tuple with the RecoveryBlob field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *GetEncryptionKey200Response) GetRecoveryBlobOk() (*string, bool) {
+	if o == nil || IsNil(o.RecoveryBlob) {
+		return nil, false
+	}
+	return o.RecoveryBlob, true
+}
+
+// HasRecoveryBlob returns a boolean if a field has been set.
+func (o *GetEncryptionKey200Response) HasRecoveryBlob() bool {
+	if o != nil && !IsNil(o.RecoveryBlob) {
+		return true
+	}
+
+	return false
+}
+
+// SetRecoveryBlob gets a reference to the given string and assigns it to the RecoveryBlob field.
+func (o *GetEncryptionKey200Response) SetRecoveryBlob(v string) {
+	o.RecoveryBlob = &v
+}
+
 func (o GetEncryptionKey200Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -264,6 +430,21 @@ func (o GetEncryptionKey200Response) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Version) {
 		toSerialize["version"] = o.Version
+	}
+	if !IsNil(o.CreatedAt) {
+		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.RotatedAt) {
+		toSerialize["rotated_at"] = o.RotatedAt
+	}
+	if !IsNil(o.HasRecovery) {
+		toSerialize["has_recovery"] = o.HasRecovery
+	}
+	if !IsNil(o.RecoverySetAt) {
+		toSerialize["recovery_set_at"] = o.RecoverySetAt
+	}
+	if !IsNil(o.RecoveryBlob) {
+		toSerialize["recovery_blob"] = o.RecoveryBlob
 	}
 	return toSerialize, nil
 }

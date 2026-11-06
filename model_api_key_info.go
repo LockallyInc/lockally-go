@@ -32,6 +32,12 @@ type ApiKeyInfo struct {
 	LastUsedAt *time.Time `json:"last_used_at,omitempty"`
 	RevokedAt *time.Time `json:"revoked_at,omitempty"`
 	CreatedAt time.Time `json:"created_at"`
+	// True for an lk_test_* key: the whole request path runs but a send never reaches the mail server and nothing counts against the account.
+	Test *bool `json:"test,omitempty"`
+	// When the key stops authenticating. Null means it does not expire, which is how every key behaved before expiry existed. Enforced at authentication, so the key fails the first request after this moment rather than whenever a sweep runs. 
+	ExpiresAt *time.Time `json:"expires_at,omitempty"`
+	// The successor issued by `POST /v1/api-keys/{id}/rotate`. Set on the PREDECESSOR, so you can see which key replaced this one while both still work through the overlap window. 
+	RotatedTo *string `json:"rotated_to,omitempty"`
 }
 
 type _ApiKeyInfo ApiKeyInfo
@@ -267,6 +273,102 @@ func (o *ApiKeyInfo) SetCreatedAt(v time.Time) {
 	o.CreatedAt = v
 }
 
+// GetTest returns the Test field value if set, zero value otherwise.
+func (o *ApiKeyInfo) GetTest() bool {
+	if o == nil || IsNil(o.Test) {
+		var ret bool
+		return ret
+	}
+	return *o.Test
+}
+
+// GetTestOk returns a tuple with the Test field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiKeyInfo) GetTestOk() (*bool, bool) {
+	if o == nil || IsNil(o.Test) {
+		return nil, false
+	}
+	return o.Test, true
+}
+
+// HasTest returns a boolean if a field has been set.
+func (o *ApiKeyInfo) HasTest() bool {
+	if o != nil && !IsNil(o.Test) {
+		return true
+	}
+
+	return false
+}
+
+// SetTest gets a reference to the given bool and assigns it to the Test field.
+func (o *ApiKeyInfo) SetTest(v bool) {
+	o.Test = &v
+}
+
+// GetExpiresAt returns the ExpiresAt field value if set, zero value otherwise.
+func (o *ApiKeyInfo) GetExpiresAt() time.Time {
+	if o == nil || IsNil(o.ExpiresAt) {
+		var ret time.Time
+		return ret
+	}
+	return *o.ExpiresAt
+}
+
+// GetExpiresAtOk returns a tuple with the ExpiresAt field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiKeyInfo) GetExpiresAtOk() (*time.Time, bool) {
+	if o == nil || IsNil(o.ExpiresAt) {
+		return nil, false
+	}
+	return o.ExpiresAt, true
+}
+
+// HasExpiresAt returns a boolean if a field has been set.
+func (o *ApiKeyInfo) HasExpiresAt() bool {
+	if o != nil && !IsNil(o.ExpiresAt) {
+		return true
+	}
+
+	return false
+}
+
+// SetExpiresAt gets a reference to the given time.Time and assigns it to the ExpiresAt field.
+func (o *ApiKeyInfo) SetExpiresAt(v time.Time) {
+	o.ExpiresAt = &v
+}
+
+// GetRotatedTo returns the RotatedTo field value if set, zero value otherwise.
+func (o *ApiKeyInfo) GetRotatedTo() string {
+	if o == nil || IsNil(o.RotatedTo) {
+		var ret string
+		return ret
+	}
+	return *o.RotatedTo
+}
+
+// GetRotatedToOk returns a tuple with the RotatedTo field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *ApiKeyInfo) GetRotatedToOk() (*string, bool) {
+	if o == nil || IsNil(o.RotatedTo) {
+		return nil, false
+	}
+	return o.RotatedTo, true
+}
+
+// HasRotatedTo returns a boolean if a field has been set.
+func (o *ApiKeyInfo) HasRotatedTo() bool {
+	if o != nil && !IsNil(o.RotatedTo) {
+		return true
+	}
+
+	return false
+}
+
+// SetRotatedTo gets a reference to the given string and assigns it to the RotatedTo field.
+func (o *ApiKeyInfo) SetRotatedTo(v string) {
+	o.RotatedTo = &v
+}
+
 func (o ApiKeyInfo) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -289,6 +391,15 @@ func (o ApiKeyInfo) ToMap() (map[string]interface{}, error) {
 		toSerialize["revoked_at"] = o.RevokedAt
 	}
 	toSerialize["created_at"] = o.CreatedAt
+	if !IsNil(o.Test) {
+		toSerialize["test"] = o.Test
+	}
+	if !IsNil(o.ExpiresAt) {
+		toSerialize["expires_at"] = o.ExpiresAt
+	}
+	if !IsNil(o.RotatedTo) {
+		toSerialize["rotated_to"] = o.RotatedTo
+	}
 	return toSerialize, nil
 }
 

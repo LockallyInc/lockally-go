@@ -185,7 +185,7 @@ type ApiCheckMigrationDNSRequest struct {
 	id string
 }
 
-func (r ApiCheckMigrationDNSRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiCheckMigrationDNSRequest) Execute() (*MigrationDNSCheck, *http.Response, error) {
 	return r.ApiService.CheckMigrationDNSExecute(r)
 }
 
@@ -205,13 +205,13 @@ func (a *MigrationsAPIService) CheckMigrationDNS(ctx context.Context, id string)
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *MigrationsAPIService) CheckMigrationDNSExecute(r ApiCheckMigrationDNSRequest) (map[string]interface{}, *http.Response, error) {
+//  @return MigrationDNSCheck
+func (a *MigrationsAPIService) CheckMigrationDNSExecute(r ApiCheckMigrationDNSRequest) (*MigrationDNSCheck, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarReturnValue  *MigrationDNSCheck
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "MigrationsAPIService.CheckMigrationDNS")
@@ -264,6 +264,17 @@ func (a *MigrationsAPIService) CheckMigrationDNSExecute(r ApiCheckMigrationDNSRe
 		newErr := &GenericOpenAPIError{
 			body:  localVarBody,
 			error: localVarHTTPResponse.Status,
+		}
+		if localVarHTTPResponse.StatusCode == 400 {
+			var v Problem
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 401 {
 			var v Problem

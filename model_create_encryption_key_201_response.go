@@ -24,6 +24,7 @@ type CreateEncryptionKey201Response struct {
 	Id *string `json:"id,omitempty"`
 	MailboxId *string `json:"mailbox_id,omitempty"`
 	CreatedAt *time.Time `json:"created_at,omitempty"`
+	ReplacedOld *bool `json:"replaced_old,omitempty"`
 }
 
 // NewCreateEncryptionKey201Response instantiates a new CreateEncryptionKey201Response object
@@ -139,6 +140,38 @@ func (o *CreateEncryptionKey201Response) SetCreatedAt(v time.Time) {
 	o.CreatedAt = &v
 }
 
+// GetReplacedOld returns the ReplacedOld field value if set, zero value otherwise.
+func (o *CreateEncryptionKey201Response) GetReplacedOld() bool {
+	if o == nil || IsNil(o.ReplacedOld) {
+		var ret bool
+		return ret
+	}
+	return *o.ReplacedOld
+}
+
+// GetReplacedOldOk returns a tuple with the ReplacedOld field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *CreateEncryptionKey201Response) GetReplacedOldOk() (*bool, bool) {
+	if o == nil || IsNil(o.ReplacedOld) {
+		return nil, false
+	}
+	return o.ReplacedOld, true
+}
+
+// HasReplacedOld returns a boolean if a field has been set.
+func (o *CreateEncryptionKey201Response) HasReplacedOld() bool {
+	if o != nil && !IsNil(o.ReplacedOld) {
+		return true
+	}
+
+	return false
+}
+
+// SetReplacedOld gets a reference to the given bool and assigns it to the ReplacedOld field.
+func (o *CreateEncryptionKey201Response) SetReplacedOld(v bool) {
+	o.ReplacedOld = &v
+}
+
 func (o CreateEncryptionKey201Response) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -157,6 +190,9 @@ func (o CreateEncryptionKey201Response) ToMap() (map[string]interface{}, error) 
 	}
 	if !IsNil(o.CreatedAt) {
 		toSerialize["created_at"] = o.CreatedAt
+	}
+	if !IsNil(o.ReplacedOld) {
+		toSerialize["replaced_old"] = o.ReplacedOld
 	}
 	return toSerialize, nil
 }

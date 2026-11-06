@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 **MessageId** | Pointer to **string** |  | [optional] 
 **Status** | Pointer to **string** | \&quot;suppressed\&quot; means every recipient of that slot was on your suppression list, and it carries no id or message_id. \&quot;delivered\&quot; only appears on a test key: the send was simulated, not transmitted. | [optional] 
 **Error** | Pointer to **string** | Present when this message failed; the others are then absent. | [optional] 
+**Warning** | Pointer to **string** | Advisory, and NOT a failure. Today the only one is a template variable the template referenced and the request never supplied, which rendered as the empty string. | [optional] 
 
 ## Methods
 
@@ -153,6 +154,31 @@ SetError sets Error field to given value.
 `func (o *BatchResult) HasError() bool`
 
 HasError returns a boolean if a field has been set.
+
+### GetWarning
+
+`func (o *BatchResult) GetWarning() string`
+
+GetWarning returns the Warning field if non-nil, zero value otherwise.
+
+### GetWarningOk
+
+`func (o *BatchResult) GetWarningOk() (*string, bool)`
+
+GetWarningOk returns a tuple with the Warning field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetWarning
+
+`func (o *BatchResult) SetWarning(v string)`
+
+SetWarning sets Warning field to given value.
+
+### HasWarning
+
+`func (o *BatchResult) HasWarning() bool`
+
+HasWarning returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

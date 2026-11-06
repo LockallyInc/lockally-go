@@ -186,9 +186,14 @@ func (r ApiDeleteUserRequest) Execute() (*http.Response, error) {
 }
 
 /*
-DeleteUser Delete a user
+DeleteUser Deprovision a user
 
-Soft-deletes the user by setting status to deprovisioned.
+Sets the user's status to `deprovisioned` and ends their access: each
+of their mailboxes and their console membership is disabled, app
+passwords are revoked, and every webmail and console session ends. Their
+mail is kept. API keys belong to the workspace and are not revoked;
+rotate any the person had access to.
+
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
@@ -284,6 +289,17 @@ func (a *UsersAPIService) DeleteUserExecute(r ApiDeleteUserRequest) (*http.Respo
 			return localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Problem
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
 			var v Problem
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {
@@ -582,6 +598,15 @@ func (r ApiUpdateUserRequest) Execute() (*User, *http.Response, error) {
 /*
 UpdateUser Update a user
 
+Setting `status` to `suspended` or `deprovisioned` takes away everything
+the person signs in with: each of their mailboxes and their console
+membership is disabled, app passwords are revoked, and every webmail and
+console session ends. Setting it back to `active` restores what the
+suspension disabled, and nothing an admin disabled for another reason.
+API keys belong to the workspace, not to the person who created them,
+and are not revoked; rotate any the person had access to.
+
+
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param id
  @return ApiUpdateUserRequest
@@ -694,6 +719,17 @@ func (a *UsersAPIService) UpdateUserExecute(r ApiUpdateUserRequest) (*User, *htt
 			return localVarReturnValue, localVarHTTPResponse, newErr
 		}
 		if localVarHTTPResponse.StatusCode == 404 {
+			var v Problem
+			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
+			if err != nil {
+				newErr.error = err.Error()
+				return localVarReturnValue, localVarHTTPResponse, newErr
+			}
+					newErr.error = formatErrorMessage(localVarHTTPResponse.Status, &v)
+					newErr.model = v
+			return localVarReturnValue, localVarHTTPResponse, newErr
+		}
+		if localVarHTTPResponse.StatusCode == 409 {
 			var v Problem
 			err = a.client.decode(&v, localVarBody, localVarHTTPResponse.Header.Get("Content-Type"))
 			if err != nil {

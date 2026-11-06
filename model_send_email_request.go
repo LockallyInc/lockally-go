@@ -45,6 +45,14 @@ type SendEmailRequest struct {
 	Variables map[string]string `json:"variables,omitempty"`
 	// Schedule delivery for a future RFC3339 time (≤ 30 days out). Omit or past = send now. Cancel with DELETE /v1/messages/{id} while scheduled.
 	SendAt *time.Time `json:"send_at,omitempty"`
+	// Arbitrary key/value you attach to this message and get back on every delivery webhook for it, so a send can be matched to your own records without a lookup table.  **It never leaves Lockally.** A custom entry in `headers` goes out on the wire to the recipient, which is why that is not a substitute: order ids and internal identifiers do not belong in a header the recipient can read.  At most 20 keys, keys at most 64 characters, values at most 512. **Over a limit is refused with a `400`, never truncated**: a silently shortened order id succeeds and then fails to match weeks later.  Not indexed and not filterable. 
+	Metadata map[string]string `json:"metadata,omitempty"`
+	// Labels that group this send for filtering and analytics: campaign, template, environment.  **Lowercased, trimmed and deduplicated on write**, so the grouping does not depend on every caller spelling them identically. `Campaign-X` is stored as `campaign-x`, and either spelling matches it in a filter.  At most 10 per message after deduplication, each at most 32 characters. Over either is a `400` rather than a trimmed list: a send missing the tag it was tagged for is worse than a refusal.  Unlike `metadata`, tags ARE queryable: filter with `GET /v1/messages?tag=` and group with `GET /v1/messages/stats?tag=`. 
+	Tags []string `json:"tags,omitempty"`
+	// Override the account's open-tracking setting for this one send. Omit to inherit it.  Three states matter here: `true`, `false`, and absent. A transactional receipt can set `false` without the account turning tracking off for its marketing. 
+	TrackOpens *bool `json:"track_opens,omitempty"`
+	// As `track_opens`, for click tracking. Click tracking rewrites `http(s)` links in the **HTML** part only: the plain-text part is never rewritten, because a visible redirect URL is what recipients complain about. A text-only send is therefore not click-tracked. 
+	TrackClicks *bool `json:"track_clicks,omitempty"`
 	Attachments []SendEmailRequestAttachmentsInner `json:"attachments,omitempty"`
 }
 
@@ -501,6 +509,134 @@ func (o *SendEmailRequest) SetSendAt(v time.Time) {
 	o.SendAt = &v
 }
 
+// GetMetadata returns the Metadata field value if set, zero value otherwise.
+func (o *SendEmailRequest) GetMetadata() map[string]string {
+	if o == nil || IsNil(o.Metadata) {
+		var ret map[string]string
+		return ret
+	}
+	return o.Metadata
+}
+
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendEmailRequest) GetMetadataOk() (map[string]string, bool) {
+	if o == nil || IsNil(o.Metadata) {
+		return map[string]string{}, false
+	}
+	return o.Metadata, true
+}
+
+// HasMetadata returns a boolean if a field has been set.
+func (o *SendEmailRequest) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetMetadata gets a reference to the given map[string]string and assigns it to the Metadata field.
+func (o *SendEmailRequest) SetMetadata(v map[string]string) {
+	o.Metadata = v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *SendEmailRequest) GetTags() []string {
+	if o == nil || IsNil(o.Tags) {
+		var ret []string
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendEmailRequest) GetTagsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *SendEmailRequest) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []string and assigns it to the Tags field.
+func (o *SendEmailRequest) SetTags(v []string) {
+	o.Tags = v
+}
+
+// GetTrackOpens returns the TrackOpens field value if set, zero value otherwise.
+func (o *SendEmailRequest) GetTrackOpens() bool {
+	if o == nil || IsNil(o.TrackOpens) {
+		var ret bool
+		return ret
+	}
+	return *o.TrackOpens
+}
+
+// GetTrackOpensOk returns a tuple with the TrackOpens field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendEmailRequest) GetTrackOpensOk() (*bool, bool) {
+	if o == nil || IsNil(o.TrackOpens) {
+		return nil, false
+	}
+	return o.TrackOpens, true
+}
+
+// HasTrackOpens returns a boolean if a field has been set.
+func (o *SendEmailRequest) HasTrackOpens() bool {
+	if o != nil && !IsNil(o.TrackOpens) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackOpens gets a reference to the given bool and assigns it to the TrackOpens field.
+func (o *SendEmailRequest) SetTrackOpens(v bool) {
+	o.TrackOpens = &v
+}
+
+// GetTrackClicks returns the TrackClicks field value if set, zero value otherwise.
+func (o *SendEmailRequest) GetTrackClicks() bool {
+	if o == nil || IsNil(o.TrackClicks) {
+		var ret bool
+		return ret
+	}
+	return *o.TrackClicks
+}
+
+// GetTrackClicksOk returns a tuple with the TrackClicks field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendEmailRequest) GetTrackClicksOk() (*bool, bool) {
+	if o == nil || IsNil(o.TrackClicks) {
+		return nil, false
+	}
+	return o.TrackClicks, true
+}
+
+// HasTrackClicks returns a boolean if a field has been set.
+func (o *SendEmailRequest) HasTrackClicks() bool {
+	if o != nil && !IsNil(o.TrackClicks) {
+		return true
+	}
+
+	return false
+}
+
+// SetTrackClicks gets a reference to the given bool and assigns it to the TrackClicks field.
+func (o *SendEmailRequest) SetTrackClicks(v bool) {
+	o.TrackClicks = &v
+}
+
 // GetAttachments returns the Attachments field value if set, zero value otherwise.
 func (o *SendEmailRequest) GetAttachments() []SendEmailRequestAttachmentsInner {
 	if o == nil || IsNil(o.Attachments) {
@@ -580,6 +716,18 @@ func (o SendEmailRequest) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SendAt) {
 		toSerialize["send_at"] = o.SendAt
+	}
+	if !IsNil(o.Metadata) {
+		toSerialize["metadata"] = o.Metadata
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
+	}
+	if !IsNil(o.TrackOpens) {
+		toSerialize["track_opens"] = o.TrackOpens
+	}
+	if !IsNil(o.TrackClicks) {
+		toSerialize["track_clicks"] = o.TrackClicks
 	}
 	if !IsNil(o.Attachments) {
 		toSerialize["attachments"] = o.Attachments

@@ -22,6 +22,20 @@ func Test_lockally_ContactsAPIService(t *testing.T) {
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
 
+	t.Run("Test ContactsAPIService BulkUpsertExternalContacts", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var system string
+
+		resp, httpRes, err := apiClient.ContactsAPI.BulkUpsertExternalContacts(context.Background(), system).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ContactsAPIService CreateContact", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -41,6 +55,20 @@ func Test_lockally_ContactsAPIService(t *testing.T) {
 		var id string
 
 		httpRes, err := apiClient.ContactsAPI.DeleteContact(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ContactsAPIService DeleteExternalContact", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var system string
+		var externalId string
+
+		httpRes, err := apiClient.ContactsAPI.DeleteExternalContact(context.Background(), system, externalId).Execute()
 
 		require.Nil(t, err)
 		assert.Equal(t, 200, httpRes.StatusCode)
@@ -75,6 +103,21 @@ func Test_lockally_ContactsAPIService(t *testing.T) {
 
 	})
 
+	t.Run("Test ContactsAPIService GetExternalContact", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var system string
+		var externalId string
+
+		resp, httpRes, err := apiClient.ContactsAPI.GetExternalContact(context.Background(), system, externalId).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
 	t.Run("Test ContactsAPIService ListContacts", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -94,6 +137,21 @@ func Test_lockally_ContactsAPIService(t *testing.T) {
 		var id string
 
 		resp, httpRes, err := apiClient.ContactsAPI.UpdateContact(context.Background(), id).Execute()
+
+		require.Nil(t, err)
+		require.NotNil(t, resp)
+		assert.Equal(t, 200, httpRes.StatusCode)
+
+	})
+
+	t.Run("Test ContactsAPIService UpsertExternalContact", func(t *testing.T) {
+
+		t.Skip("skip test")  // remove to run test
+
+		var system string
+		var externalId string
+
+		resp, httpRes, err := apiClient.ContactsAPI.UpsertExternalContact(context.Background(), system, externalId).Execute()
 
 		require.Nil(t, err)
 		require.NotNil(t, resp)

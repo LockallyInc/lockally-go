@@ -618,7 +618,7 @@ type ApiGetTenantHealthRequest struct {
 	ApiService *DashboardAPIService
 }
 
-func (r ApiGetTenantHealthRequest) Execute() (map[string]interface{}, *http.Response, error) {
+func (r ApiGetTenantHealthRequest) Execute() (*TenantHealthReport, *http.Response, error) {
 	return r.ApiService.GetTenantHealthExecute(r)
 }
 
@@ -636,13 +636,13 @@ func (a *DashboardAPIService) GetTenantHealth(ctx context.Context) ApiGetTenantH
 }
 
 // Execute executes the request
-//  @return map[string]interface{}
-func (a *DashboardAPIService) GetTenantHealthExecute(r ApiGetTenantHealthRequest) (map[string]interface{}, *http.Response, error) {
+//  @return TenantHealthReport
+func (a *DashboardAPIService) GetTenantHealthExecute(r ApiGetTenantHealthRequest) (*TenantHealthReport, *http.Response, error) {
 	var (
 		localVarHTTPMethod   = http.MethodGet
 		localVarPostBody     interface{}
 		formFiles            []formFile
-		localVarReturnValue  map[string]interface{}
+		localVarReturnValue  *TenantHealthReport
 	)
 
 	localBasePath, err := a.client.cfg.ServerURLWithContext(r.ctx, "DashboardAPIService.GetTenantHealth")

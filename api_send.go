@@ -277,6 +277,7 @@ type ApiGetMessageStatsRequest struct {
 	from *time.Time
 	to *time.Time
 	domain *string
+	tag *string
 }
 
 // Window start (default 7 days ago).
@@ -294,6 +295,12 @@ func (r ApiGetMessageStatsRequest) To(to time.Time) ApiGetMessageStatsRequest {
 // Filter by sender domain.
 func (r ApiGetMessageStatsRequest) Domain(domain string) ApiGetMessageStatsRequest {
 	r.domain = &domain
+	return r
+}
+
+// Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one.
+func (r ApiGetMessageStatsRequest) Tag(tag string) ApiGetMessageStatsRequest {
+	r.tag = &tag
 	return r
 }
 
@@ -349,6 +356,9 @@ func (a *SendAPIService) GetMessageStatsExecute(r ApiGetMessageStatsRequest) (*M
 	}
 	if r.domain != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "domain", r.domain, "form", "")
+	}
+	if r.tag != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tag", r.tag, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
@@ -430,10 +440,13 @@ type ApiListMessagesRequest struct {
 	ApiService *SendAPIService
 	status *string
 	sender *string
+	tag *string
 	q *string
 	since *time.Time
 	cursor *string
 	limit *int32
+	sort *string
+	order *string
 }
 
 func (r ApiListMessagesRequest) Status(status string) ApiListMessagesRequest {
@@ -444,6 +457,12 @@ func (r ApiListMessagesRequest) Status(status string) ApiListMessagesRequest {
 // Exact match against the &#x60;from&#x60; mailbox.
 func (r ApiListMessagesRequest) Sender(sender string) ApiListMessagesRequest {
 	r.sender = &sender
+	return r
+}
+
+// Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write.
+func (r ApiListMessagesRequest) Tag(tag string) ApiListMessagesRequest {
+	r.tag = &tag
 	return r
 }
 
@@ -467,6 +486,18 @@ func (r ApiListMessagesRequest) Cursor(cursor string) ApiListMessagesRequest {
 
 func (r ApiListMessagesRequest) Limit(limit int32) ApiListMessagesRequest {
 	r.limit = &limit
+	return r
+}
+
+// Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead.
+func (r ApiListMessagesRequest) Sort(sort string) ApiListMessagesRequest {
+	r.sort = &sort
+	return r
+}
+
+// Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page.
+func (r ApiListMessagesRequest) Order(order string) ApiListMessagesRequest {
+	r.order = &order
 	return r
 }
 
@@ -518,6 +549,9 @@ func (a *SendAPIService) ListMessagesExecute(r ApiListMessagesRequest) (*ListMes
 	if r.sender != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "sender", r.sender, "form", "")
 	}
+	if r.tag != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "tag", r.tag, "form", "")
+	}
 	if r.q != nil {
 		parameterAddToHeaderOrQuery(localVarQueryParams, "q", r.q, "form", "")
 	}
@@ -533,6 +567,16 @@ func (a *SendAPIService) ListMessagesExecute(r ApiListMessagesRequest) (*ListMes
 		var defaultValue int32 = 50
 		parameterAddToHeaderOrQuery(localVarQueryParams, "limit", defaultValue, "form", "")
 		r.limit = &defaultValue
+	}
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "queued_at"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
+		r.sort = &defaultValue
+	}
+	if r.order != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order", r.order, "form", "")
 	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}

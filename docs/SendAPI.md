@@ -151,7 +151,7 @@ Name | Type | Description  | Notes
 
 ## GetMessageStats
 
-> MessageStats GetMessageStats(ctx).From(from).To(to).Domain(domain).Execute()
+> MessageStats GetMessageStats(ctx).From(from).To(to).Domain(domain).Tag(tag).Execute()
 
 Aggregate delivery stats
 
@@ -174,10 +174,11 @@ func main() {
 	from := time.Now() // time.Time | Window start (default 7 days ago). (optional)
 	to := time.Now() // time.Time | Window end (default now). (optional)
 	domain := "domain_example" // string | Filter by sender domain. (optional)
+	tag := "tag_example" // string | Group the window by the sender's own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SendAPI.GetMessageStats(context.Background()).From(from).To(to).Domain(domain).Execute()
+	resp, r, err := apiClient.SendAPI.GetMessageStats(context.Background()).From(from).To(to).Domain(domain).Tag(tag).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SendAPI.GetMessageStats``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -201,6 +202,7 @@ Name | Type | Description  | Notes
  **from** | **time.Time** | Window start (default 7 days ago). | 
  **to** | **time.Time** | Window end (default now). | 
  **domain** | **string** | Filter by sender domain. | 
+ **tag** | **string** | Group the window by the sender&#39;s own tags: one tag, or a comma-separated set meaning ANY. Case-insensitive. This is the dimension that tells a transactional stream from a notification one. | 
 
 ### Return type
 
@@ -222,7 +224,7 @@ Name | Type | Description  | Notes
 
 ## ListMessages
 
-> ListMessages200Response ListMessages(ctx).Status(status).Sender(sender).Q(q).Since(since).Cursor(cursor).Limit(limit).Execute()
+> ListMessages200Response ListMessages(ctx).Status(status).Sender(sender).Tag(tag).Q(q).Since(since).Cursor(cursor).Limit(limit).Sort(sort).Order(order).Execute()
 
 List outbound messages
 
@@ -244,14 +246,17 @@ import (
 func main() {
 	status := "status_example" // string |  (optional)
 	sender := "sender_example" // string | Exact match against the `from` mailbox. (optional)
+	tag := "tag_example" // string | Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. (optional)
 	q := "q_example" // string | Free-text search across subject + sender. (optional)
 	since := time.Now() // time.Time | Only messages queued at or after this RFC 3339 instant. (optional)
 	cursor := "cursor_example" // string | queued_at of the prior page boundary. Pass back the `next_cursor` returned by the previous call. (optional)
 	limit := int32(56) // int32 |  (optional) (default to 50)
+	sort := "sort_example" // string | Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account's send history. status and sender are filters instead. (optional) (default to "queued_at")
+	order := "order_example" // string | Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.SendAPI.ListMessages(context.Background()).Status(status).Sender(sender).Q(q).Since(since).Cursor(cursor).Limit(limit).Execute()
+	resp, r, err := apiClient.SendAPI.ListMessages(context.Background()).Status(status).Sender(sender).Tag(tag).Q(q).Since(since).Cursor(cursor).Limit(limit).Sort(sort).Order(order).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `SendAPI.ListMessages``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -274,10 +279,13 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **status** | **string** |  | 
  **sender** | **string** | Exact match against the &#x60;from&#x60; mailbox. | 
+ **tag** | **string** | Filter to messages carrying any of these tags. One tag, or a comma-separated set meaning ANY. Case-insensitive: the value is normalised the same way tags are on write. | 
  **q** | **string** | Free-text search across subject + sender. | 
  **since** | **time.Time** | Only messages queued at or after this RFC 3339 instant. | 
  **cursor** | **string** | queued_at of the prior page boundary. Pass back the &#x60;next_cursor&#x60; returned by the previous call. | 
  **limit** | **int32** |  | [default to 50]
+ **sort** | **string** | Field to order by. Only indexed columns are offered: an unindexed sort on this table is a full scan of the account&#39;s send history. status and sender are filters instead. | [default to &quot;queued_at&quot;]
+ **order** | **string** | Defaults to desc for the default field and asc for any other. The order is always made total by a tie-break on id, so paging cannot repeat or skip a row that shares a timestamp. cursor encodes queued_at, so combining it with another sort is a 400 rather than a wrong page. | 
 
 ### Return type
 

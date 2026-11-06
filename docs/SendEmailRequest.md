@@ -18,6 +18,10 @@ Name | Type | Description | Notes
 **TemplateId** | Pointer to **string** | Render subject/text/html from a stored template (GET /v1/templates). Mutually exclusive with inline subject/text/html. | [optional] 
 **Variables** | Pointer to **map[string]string** | Values substituted into the template&#39;s {{variable}} placeholders. | [optional] 
 **SendAt** | Pointer to **time.Time** | Schedule delivery for a future RFC3339 time (≤ 30 days out). Omit or past &#x3D; send now. Cancel with DELETE /v1/messages/{id} while scheduled. | [optional] 
+**Metadata** | Pointer to **map[string]string** | Arbitrary key/value you attach to this message and get back on every delivery webhook for it, so a send can be matched to your own records without a lookup table.  **It never leaves Lockally.** A custom entry in &#x60;headers&#x60; goes out on the wire to the recipient, which is why that is not a substitute: order ids and internal identifiers do not belong in a header the recipient can read.  At most 20 keys, keys at most 64 characters, values at most 512. **Over a limit is refused with a &#x60;400&#x60;, never truncated**: a silently shortened order id succeeds and then fails to match weeks later.  Not indexed and not filterable.  | [optional] 
+**Tags** | Pointer to **[]string** | Labels that group this send for filtering and analytics: campaign, template, environment.  **Lowercased, trimmed and deduplicated on write**, so the grouping does not depend on every caller spelling them identically. &#x60;Campaign-X&#x60; is stored as &#x60;campaign-x&#x60;, and either spelling matches it in a filter.  At most 10 per message after deduplication, each at most 32 characters. Over either is a &#x60;400&#x60; rather than a trimmed list: a send missing the tag it was tagged for is worse than a refusal.  Unlike &#x60;metadata&#x60;, tags ARE queryable: filter with &#x60;GET /v1/messages?tag&#x3D;&#x60; and group with &#x60;GET /v1/messages/stats?tag&#x3D;&#x60;.  | [optional] 
+**TrackOpens** | Pointer to **bool** | Override the account&#39;s open-tracking setting for this one send. Omit to inherit it.  Three states matter here: &#x60;true&#x60;, &#x60;false&#x60;, and absent. A transactional receipt can set &#x60;false&#x60; without the account turning tracking off for its marketing.  | [optional] 
+**TrackClicks** | Pointer to **bool** | As &#x60;track_opens&#x60;, for click tracking. Click tracking rewrites &#x60;http(s)&#x60; links in the **HTML** part only: the plain-text part is never rewritten, because a visible redirect URL is what recipients complain about. A text-only send is therefore not click-tracked.  | [optional] 
 **Attachments** | Pointer to [**[]SendEmailRequestAttachmentsInner**](SendEmailRequestAttachmentsInner.md) |  | [optional] 
 
 ## Methods
@@ -378,6 +382,106 @@ SetSendAt sets SendAt field to given value.
 `func (o *SendEmailRequest) HasSendAt() bool`
 
 HasSendAt returns a boolean if a field has been set.
+
+### GetMetadata
+
+`func (o *SendEmailRequest) GetMetadata() map[string]string`
+
+GetMetadata returns the Metadata field if non-nil, zero value otherwise.
+
+### GetMetadataOk
+
+`func (o *SendEmailRequest) GetMetadataOk() (*map[string]string, bool)`
+
+GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetadata
+
+`func (o *SendEmailRequest) SetMetadata(v map[string]string)`
+
+SetMetadata sets Metadata field to given value.
+
+### HasMetadata
+
+`func (o *SendEmailRequest) HasMetadata() bool`
+
+HasMetadata returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *SendEmailRequest) GetTags() []string`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *SendEmailRequest) GetTagsOk() (*[]string, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *SendEmailRequest) SetTags(v []string)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *SendEmailRequest) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
+
+### GetTrackOpens
+
+`func (o *SendEmailRequest) GetTrackOpens() bool`
+
+GetTrackOpens returns the TrackOpens field if non-nil, zero value otherwise.
+
+### GetTrackOpensOk
+
+`func (o *SendEmailRequest) GetTrackOpensOk() (*bool, bool)`
+
+GetTrackOpensOk returns a tuple with the TrackOpens field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrackOpens
+
+`func (o *SendEmailRequest) SetTrackOpens(v bool)`
+
+SetTrackOpens sets TrackOpens field to given value.
+
+### HasTrackOpens
+
+`func (o *SendEmailRequest) HasTrackOpens() bool`
+
+HasTrackOpens returns a boolean if a field has been set.
+
+### GetTrackClicks
+
+`func (o *SendEmailRequest) GetTrackClicks() bool`
+
+GetTrackClicks returns the TrackClicks field if non-nil, zero value otherwise.
+
+### GetTrackClicksOk
+
+`func (o *SendEmailRequest) GetTrackClicksOk() (*bool, bool)`
+
+GetTrackClicksOk returns a tuple with the TrackClicks field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTrackClicks
+
+`func (o *SendEmailRequest) SetTrackClicks(v bool)`
+
+SetTrackClicks sets TrackClicks field to given value.
+
+### HasTrackClicks
+
+`func (o *SendEmailRequest) HasTrackClicks() bool`
+
+HasTrackClicks returns a boolean if a field has been set.
 
 ### GetAttachments
 

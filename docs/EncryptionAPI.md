@@ -8,7 +8,8 @@ Method | HTTP request | Description
 [**CreateEncryptionKey**](EncryptionAPI.md#CreateEncryptionKey) | **Post** /v1/encryption/keys | Upload an encryption key pair
 [**CreateEncryptionRecovery**](EncryptionAPI.md#CreateEncryptionRecovery) | **Post** /v1/encryption/recovery | Store an encryption recovery blob
 [**GetEncryptionKey**](EncryptionAPI.md#GetEncryptionKey) | **Get** /v1/encryption/keys/{email} | Get encryption key for a mailbox
-[**RotateEncryptionKey**](EncryptionAPI.md#RotateEncryptionKey) | **Post** /v1/encryption/keys/rotate | Rotate an encryption key
+[**GetEncryptionStatus**](EncryptionAPI.md#GetEncryptionStatus) | **Get** /v1/encryption/status | End-to-end encryption status for the workspace
+[**RotateEncryptionKey**](EncryptionAPI.md#RotateEncryptionKey) | **Post** /v1/encryption/keys/rotate | Re-seal an encryption key under a new password
 
 
 
@@ -82,6 +83,8 @@ Name | Type | Description  | Notes
 
 Upload an encryption key pair
 
+
+
 ### Example
 
 ```go
@@ -95,7 +98,7 @@ import (
 )
 
 func main() {
-	createEncryptionKeyRequest := *openapiclient.NewCreateEncryptionKeyRequest("MailboxEmail_example", "PublicKey_example", "EncryptedPrivateKey_example") // CreateEncryptionKeyRequest | 
+	createEncryptionKeyRequest := *openapiclient.NewCreateEncryptionKeyRequest("PublicKey_example", "EncryptedPrivateKey_example") // CreateEncryptionKeyRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -146,6 +149,8 @@ Name | Type | Description  | Notes
 
 Store an encryption recovery blob
 
+
+
 ### Example
 
 ```go
@@ -159,7 +164,7 @@ import (
 )
 
 func main() {
-	createEncryptionRecoveryRequest := *openapiclient.NewCreateEncryptionRecoveryRequest("MailboxEmail_example", "RecoveryBlob_example") // CreateEncryptionRecoveryRequest | 
+	createEncryptionRecoveryRequest := *openapiclient.NewCreateEncryptionRecoveryRequest("RecoveryBlob_example") // CreateEncryptionRecoveryRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
@@ -207,6 +212,8 @@ Name | Type | Description  | Notes
 > GetEncryptionKey200Response GetEncryptionKey(ctx, email).Execute()
 
 Get encryption key for a mailbox
+
+
 
 ### Example
 
@@ -270,11 +277,13 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## RotateEncryptionKey
+## GetEncryptionStatus
 
-> RotateEncryptionKey(ctx).RotateEncryptionKeyRequest(rotateEncryptionKeyRequest).Execute()
+> GetEncryptionStatus200Response GetEncryptionStatus(ctx).Execute()
 
-Rotate an encryption key
+End-to-end encryption status for the workspace
+
+
 
 ### Example
 
@@ -289,7 +298,68 @@ import (
 )
 
 func main() {
-	rotateEncryptionKeyRequest := *openapiclient.NewRotateEncryptionKeyRequest("MailboxEmail_example", "EncryptedPrivateKey_example") // RotateEncryptionKeyRequest | 
+
+	configuration := openapiclient.NewConfiguration()
+	apiClient := openapiclient.NewAPIClient(configuration)
+	resp, r, err := apiClient.EncryptionAPI.GetEncryptionStatus(context.Background()).Execute()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error when calling `EncryptionAPI.GetEncryptionStatus``: %v\n", err)
+		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
+	}
+	// response from `GetEncryptionStatus`: GetEncryptionStatus200Response
+	fmt.Fprintf(os.Stdout, "Response from `EncryptionAPI.GetEncryptionStatus`: %v\n", resp)
+}
+```
+
+### Path Parameters
+
+This endpoint does not need any parameter.
+
+### Other Parameters
+
+Other parameters are passed through a pointer to a apiGetEncryptionStatusRequest struct via the builder pattern
+
+
+### Return type
+
+[**GetEncryptionStatus200Response**](GetEncryptionStatus200Response.md)
+
+### Authorization
+
+[bearerAuth](../README.md#bearerAuth)
+
+### HTTP request headers
+
+- **Content-Type**: Not defined
+- **Accept**: application/json, application/problem+json
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
+[[Back to Model list]](../README.md#documentation-for-models)
+[[Back to README]](../README.md)
+
+
+## RotateEncryptionKey
+
+> RotateEncryptionKey(ctx).RotateEncryptionKeyRequest(rotateEncryptionKeyRequest).Execute()
+
+Re-seal an encryption key under a new password
+
+
+
+### Example
+
+```go
+package main
+
+import (
+	"context"
+	"fmt"
+	"os"
+	openapiclient "github.com/lockallyinc/lockally-go"
+)
+
+func main() {
+	rotateEncryptionKeyRequest := *openapiclient.NewRotateEncryptionKeyRequest("EncryptedPrivateKey_example") // RotateEncryptionKeyRequest | 
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)

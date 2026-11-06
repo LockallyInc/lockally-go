@@ -4,7 +4,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MailboxEmail** | **string** |  | 
+**MailboxEmail** | Pointer to **string** |  | [optional] 
 **PublicKey** | **string** |  | 
 **EncryptedPrivateKey** | **string** |  | 
 **KdfParams** | Pointer to **map[string]interface{}** |  | [optional] 
@@ -13,7 +13,7 @@ Name | Type | Description | Notes
 
 ### NewCreateEncryptionKeyRequest
 
-`func NewCreateEncryptionKeyRequest(mailboxEmail string, publicKey string, encryptedPrivateKey string, ) *CreateEncryptionKeyRequest`
+`func NewCreateEncryptionKeyRequest(publicKey string, encryptedPrivateKey string, ) *CreateEncryptionKeyRequest`
 
 NewCreateEncryptionKeyRequest instantiates a new CreateEncryptionKeyRequest object
 This constructor will assign default values to properties that have it defined,
@@ -47,6 +47,11 @@ and a boolean to check if the value has been set.
 
 SetMailboxEmail sets MailboxEmail field to given value.
 
+### HasMailboxEmail
+
+`func (o *CreateEncryptionKeyRequest) HasMailboxEmail() bool`
+
+HasMailboxEmail returns a boolean if a field has been set.
 
 ### GetPublicKey
 

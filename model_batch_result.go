@@ -27,6 +27,8 @@ type BatchResult struct {
 	Status *string `json:"status,omitempty"`
 	// Present when this message failed; the others are then absent.
 	Error *string `json:"error,omitempty"`
+	// Advisory, and NOT a failure. Today the only one is a template variable the template referenced and the request never supplied, which rendered as the empty string.
+	Warning *string `json:"warning,omitempty"`
 }
 
 // NewBatchResult instantiates a new BatchResult object
@@ -206,6 +208,38 @@ func (o *BatchResult) SetError(v string) {
 	o.Error = &v
 }
 
+// GetWarning returns the Warning field value if set, zero value otherwise.
+func (o *BatchResult) GetWarning() string {
+	if o == nil || IsNil(o.Warning) {
+		var ret string
+		return ret
+	}
+	return *o.Warning
+}
+
+// GetWarningOk returns a tuple with the Warning field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *BatchResult) GetWarningOk() (*string, bool) {
+	if o == nil || IsNil(o.Warning) {
+		return nil, false
+	}
+	return o.Warning, true
+}
+
+// HasWarning returns a boolean if a field has been set.
+func (o *BatchResult) HasWarning() bool {
+	if o != nil && !IsNil(o.Warning) {
+		return true
+	}
+
+	return false
+}
+
+// SetWarning gets a reference to the given string and assigns it to the Warning field.
+func (o *BatchResult) SetWarning(v string) {
+	o.Warning = &v
+}
+
 func (o BatchResult) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -230,6 +264,9 @@ func (o BatchResult) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.Error) {
 		toSerialize["error"] = o.Error
+	}
+	if !IsNil(o.Warning) {
+		toSerialize["warning"] = o.Warning
 	}
 	return toSerialize, nil
 }

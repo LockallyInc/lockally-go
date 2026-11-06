@@ -37,6 +37,10 @@ type Contact struct {
 	Status string `json:"status"`
 	CreatedAt time.Time `json:"created_at"`
 	UpdatedAt time.Time `json:"updated_at"`
+	// The system that owns this contact's external id. Absent on contacts made by hand.
+	ExternalSystem *string `json:"external_system,omitempty"`
+	// The contact's id in `external_system`. Absent on contacts made by hand.
+	ExternalId *string `json:"external_id,omitempty"`
 }
 
 type _Contact Contact
@@ -450,6 +454,70 @@ func (o *Contact) SetUpdatedAt(v time.Time) {
 	o.UpdatedAt = v
 }
 
+// GetExternalSystem returns the ExternalSystem field value if set, zero value otherwise.
+func (o *Contact) GetExternalSystem() string {
+	if o == nil || IsNil(o.ExternalSystem) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalSystem
+}
+
+// GetExternalSystemOk returns a tuple with the ExternalSystem field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Contact) GetExternalSystemOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalSystem) {
+		return nil, false
+	}
+	return o.ExternalSystem, true
+}
+
+// HasExternalSystem returns a boolean if a field has been set.
+func (o *Contact) HasExternalSystem() bool {
+	if o != nil && !IsNil(o.ExternalSystem) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalSystem gets a reference to the given string and assigns it to the ExternalSystem field.
+func (o *Contact) SetExternalSystem(v string) {
+	o.ExternalSystem = &v
+}
+
+// GetExternalId returns the ExternalId field value if set, zero value otherwise.
+func (o *Contact) GetExternalId() string {
+	if o == nil || IsNil(o.ExternalId) {
+		var ret string
+		return ret
+	}
+	return *o.ExternalId
+}
+
+// GetExternalIdOk returns a tuple with the ExternalId field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *Contact) GetExternalIdOk() (*string, bool) {
+	if o == nil || IsNil(o.ExternalId) {
+		return nil, false
+	}
+	return o.ExternalId, true
+}
+
+// HasExternalId returns a boolean if a field has been set.
+func (o *Contact) HasExternalId() bool {
+	if o != nil && !IsNil(o.ExternalId) {
+		return true
+	}
+
+	return false
+}
+
+// SetExternalId gets a reference to the given string and assigns it to the ExternalId field.
+func (o *Contact) SetExternalId(v string) {
+	o.ExternalId = &v
+}
+
 func (o Contact) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -486,6 +554,12 @@ func (o Contact) ToMap() (map[string]interface{}, error) {
 	toSerialize["status"] = o.Status
 	toSerialize["created_at"] = o.CreatedAt
 	toSerialize["updated_at"] = o.UpdatedAt
+	if !IsNil(o.ExternalSystem) {
+		toSerialize["external_system"] = o.ExternalSystem
+	}
+	if !IsNil(o.ExternalId) {
+		toSerialize["external_id"] = o.ExternalId
+	}
 	return toSerialize, nil
 }
 

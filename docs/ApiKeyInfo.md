@@ -12,6 +12,9 @@ Name | Type | Description | Notes
 **LastUsedAt** | Pointer to **time.Time** |  | [optional] 
 **RevokedAt** | Pointer to **time.Time** |  | [optional] 
 **CreatedAt** | **time.Time** |  | 
+**Test** | Pointer to **bool** | True for an lk_test_* key: the whole request path runs but a send never reaches the mail server and nothing counts against the account. | [optional] 
+**ExpiresAt** | Pointer to **time.Time** | When the key stops authenticating. Null means it does not expire, which is how every key behaved before expiry existed. Enforced at authentication, so the key fails the first request after this moment rather than whenever a sweep runs.  | [optional] 
+**RotatedTo** | Pointer to **string** | The successor issued by &#x60;POST /v1/api-keys/{id}/rotate&#x60;. Set on the PREDECESSOR, so you can see which key replaced this one while both still work through the overlap window.  | [optional] 
 
 ## Methods
 
@@ -201,6 +204,81 @@ and a boolean to check if the value has been set.
 
 SetCreatedAt sets CreatedAt field to given value.
 
+
+### GetTest
+
+`func (o *ApiKeyInfo) GetTest() bool`
+
+GetTest returns the Test field if non-nil, zero value otherwise.
+
+### GetTestOk
+
+`func (o *ApiKeyInfo) GetTestOk() (*bool, bool)`
+
+GetTestOk returns a tuple with the Test field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTest
+
+`func (o *ApiKeyInfo) SetTest(v bool)`
+
+SetTest sets Test field to given value.
+
+### HasTest
+
+`func (o *ApiKeyInfo) HasTest() bool`
+
+HasTest returns a boolean if a field has been set.
+
+### GetExpiresAt
+
+`func (o *ApiKeyInfo) GetExpiresAt() time.Time`
+
+GetExpiresAt returns the ExpiresAt field if non-nil, zero value otherwise.
+
+### GetExpiresAtOk
+
+`func (o *ApiKeyInfo) GetExpiresAtOk() (*time.Time, bool)`
+
+GetExpiresAtOk returns a tuple with the ExpiresAt field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetExpiresAt
+
+`func (o *ApiKeyInfo) SetExpiresAt(v time.Time)`
+
+SetExpiresAt sets ExpiresAt field to given value.
+
+### HasExpiresAt
+
+`func (o *ApiKeyInfo) HasExpiresAt() bool`
+
+HasExpiresAt returns a boolean if a field has been set.
+
+### GetRotatedTo
+
+`func (o *ApiKeyInfo) GetRotatedTo() string`
+
+GetRotatedTo returns the RotatedTo field if non-nil, zero value otherwise.
+
+### GetRotatedToOk
+
+`func (o *ApiKeyInfo) GetRotatedToOk() (*string, bool)`
+
+GetRotatedToOk returns a tuple with the RotatedTo field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetRotatedTo
+
+`func (o *ApiKeyInfo) SetRotatedTo(v string)`
+
+SetRotatedTo sets RotatedTo field to given value.
+
+### HasRotatedTo
+
+`func (o *ApiKeyInfo) HasRotatedTo() bool`
+
+HasRotatedTo returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

@@ -22,7 +22,7 @@ var _ MappedNullable = &RotateEncryptionKeyRequest{}
 
 // RotateEncryptionKeyRequest struct for RotateEncryptionKeyRequest
 type RotateEncryptionKeyRequest struct {
-	MailboxEmail string `json:"mailbox_email"`
+	MailboxEmail *string `json:"mailbox_email,omitempty"`
 	EncryptedPrivateKey string `json:"encrypted_private_key"`
 	KdfParams map[string]interface{} `json:"kdf_params,omitempty"`
 }
@@ -33,9 +33,8 @@ type _RotateEncryptionKeyRequest RotateEncryptionKeyRequest
 // This constructor will assign default values to properties that have it defined,
 // and makes sure properties required by API are set, but the set of arguments
 // will change when the set of required properties is changed
-func NewRotateEncryptionKeyRequest(mailboxEmail string, encryptedPrivateKey string) *RotateEncryptionKeyRequest {
+func NewRotateEncryptionKeyRequest(encryptedPrivateKey string) *RotateEncryptionKeyRequest {
 	this := RotateEncryptionKeyRequest{}
-	this.MailboxEmail = mailboxEmail
 	this.EncryptedPrivateKey = encryptedPrivateKey
 	return &this
 }
@@ -48,28 +47,36 @@ func NewRotateEncryptionKeyRequestWithDefaults() *RotateEncryptionKeyRequest {
 	return &this
 }
 
-// GetMailboxEmail returns the MailboxEmail field value
+// GetMailboxEmail returns the MailboxEmail field value if set, zero value otherwise.
 func (o *RotateEncryptionKeyRequest) GetMailboxEmail() string {
-	if o == nil {
+	if o == nil || IsNil(o.MailboxEmail) {
 		var ret string
 		return ret
 	}
-
-	return o.MailboxEmail
+	return *o.MailboxEmail
 }
 
-// GetMailboxEmailOk returns a tuple with the MailboxEmail field value
+// GetMailboxEmailOk returns a tuple with the MailboxEmail field value if set, nil otherwise
 // and a boolean to check if the value has been set.
 func (o *RotateEncryptionKeyRequest) GetMailboxEmailOk() (*string, bool) {
-	if o == nil {
+	if o == nil || IsNil(o.MailboxEmail) {
 		return nil, false
 	}
-	return &o.MailboxEmail, true
+	return o.MailboxEmail, true
 }
 
-// SetMailboxEmail sets field value
+// HasMailboxEmail returns a boolean if a field has been set.
+func (o *RotateEncryptionKeyRequest) HasMailboxEmail() bool {
+	if o != nil && !IsNil(o.MailboxEmail) {
+		return true
+	}
+
+	return false
+}
+
+// SetMailboxEmail gets a reference to the given string and assigns it to the MailboxEmail field.
 func (o *RotateEncryptionKeyRequest) SetMailboxEmail(v string) {
-	o.MailboxEmail = v
+	o.MailboxEmail = &v
 }
 
 // GetEncryptedPrivateKey returns the EncryptedPrivateKey field value
@@ -138,7 +145,9 @@ func (o RotateEncryptionKeyRequest) MarshalJSON() ([]byte, error) {
 
 func (o RotateEncryptionKeyRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
-	toSerialize["mailbox_email"] = o.MailboxEmail
+	if !IsNil(o.MailboxEmail) {
+		toSerialize["mailbox_email"] = o.MailboxEmail
+	}
 	toSerialize["encrypted_private_key"] = o.EncryptedPrivateKey
 	if !IsNil(o.KdfParams) {
 		toSerialize["kdf_params"] = o.KdfParams
@@ -151,7 +160,6 @@ func (o *RotateEncryptionKeyRequest) UnmarshalJSON(data []byte) (err error) {
 	// by unmarshalling the object into a generic map with string keys and checking
 	// that every required field exists as a key in the generic map.
 	requiredProperties := []string{
-		"mailbox_email",
 		"encrypted_private_key",
 	}
 

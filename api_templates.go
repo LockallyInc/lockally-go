@@ -378,6 +378,20 @@ func (a *TemplatesAPIService) GetTemplateExecute(r ApiGetTemplateRequest) (*Temp
 type ApiListTemplatesRequest struct {
 	ctx context.Context
 	ApiService *TemplatesAPIService
+	sort *string
+	order *string
+}
+
+// Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+func (r ApiListTemplatesRequest) Sort(sort string) ApiListTemplatesRequest {
+	r.sort = &sort
+	return r
+}
+
+// Defaults to asc for the default field and asc for any other. Always tie-broken on id, so the order is total.
+func (r ApiListTemplatesRequest) Order(order string) ApiListTemplatesRequest {
+	r.order = &order
+	return r
 }
 
 func (r ApiListTemplatesRequest) Execute() (*ListTemplates200Response, *http.Response, error) {
@@ -418,6 +432,16 @@ func (a *TemplatesAPIService) ListTemplatesExecute(r ApiListTemplatesRequest) (*
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "name"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
+		r.sort = &defaultValue
+	}
+	if r.order != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order", r.order, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

@@ -5,7 +5,7 @@ All URIs are relative to *https://api.lockally.com*
 Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**CreateUser**](UsersAPI.md#CreateUser) | **Post** /v1/users | Create a user
-[**DeleteUser**](UsersAPI.md#DeleteUser) | **Delete** /v1/users/{id} | Delete a user
+[**DeleteUser**](UsersAPI.md#DeleteUser) | **Delete** /v1/users/{id} | Deprovision a user
 [**GetUser**](UsersAPI.md#GetUser) | **Get** /v1/users/{id} | Get a user
 [**ListUsers**](UsersAPI.md#ListUsers) | **Get** /v1/users | List users
 [**UpdateUser**](UsersAPI.md#UpdateUser) | **Patch** /v1/users/{id} | Update a user
@@ -80,7 +80,7 @@ Name | Type | Description  | Notes
 
 > DeleteUser(ctx, id).Execute()
 
-Delete a user
+Deprovision a user
 
 
 
@@ -281,6 +281,8 @@ Name | Type | Description  | Notes
 > User UpdateUser(ctx, id).UpdateUserRequest(updateUserRequest).Execute()
 
 Update a user
+
+
 
 ### Example
 

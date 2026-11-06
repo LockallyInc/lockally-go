@@ -98,7 +98,7 @@ Name | Type | Description  | Notes
 
 ## CheckMigrationDNS
 
-> map[string]interface{} CheckMigrationDNS(ctx, id).Execute()
+> MigrationDNSCheck CheckMigrationDNS(ctx, id).Execute()
 
 Check DNS readiness for cutover
 
@@ -124,7 +124,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `MigrationsAPI.CheckMigrationDNS``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `CheckMigrationDNS`: map[string]interface{}
+	// response from `CheckMigrationDNS`: MigrationDNSCheck
 	fmt.Fprintf(os.Stdout, "Response from `MigrationsAPI.CheckMigrationDNS`: %v\n", resp)
 }
 ```
@@ -148,7 +148,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-**map[string]interface{}**
+[**MigrationDNSCheck**](MigrationDNSCheck.md)
 
 ### Authorization
 

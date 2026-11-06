@@ -879,6 +879,20 @@ func (a *DomainsAPIService) GetReturnPathExecute(r ApiGetReturnPathRequest) (*Re
 type ApiListDomainsRequest struct {
 	ctx context.Context
 	ApiService *DomainsAPIService
+	sort *string
+	order *string
+}
+
+// Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index.
+func (r ApiListDomainsRequest) Sort(sort string) ApiListDomainsRequest {
+	r.sort = &sort
+	return r
+}
+
+// Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total.
+func (r ApiListDomainsRequest) Order(order string) ApiListDomainsRequest {
+	r.order = &order
+	return r
 }
 
 func (r ApiListDomainsRequest) Execute() (*ListDomains200Response, *http.Response, error) {
@@ -921,6 +935,16 @@ func (a *DomainsAPIService) ListDomainsExecute(r ApiListDomainsRequest) (*ListDo
 	localVarQueryParams := url.Values{}
 	localVarFormParams := url.Values{}
 
+	if r.sort != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", r.sort, "form", "")
+	} else {
+		var defaultValue string = "created_at"
+		parameterAddToHeaderOrQuery(localVarQueryParams, "sort", defaultValue, "form", "")
+		r.sort = &defaultValue
+	}
+	if r.order != nil {
+		parameterAddToHeaderOrQuery(localVarQueryParams, "order", r.order, "form", "")
+	}
 	// to determine the Content-Type header
 	localVarHTTPContentTypes := []string{}
 

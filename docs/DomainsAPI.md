@@ -428,7 +428,7 @@ Name | Type | Description  | Notes
 
 ## ListDomains
 
-> ListDomains200Response ListDomains(ctx).Execute()
+> ListDomains200Response ListDomains(ctx).Sort(sort).Order(order).Execute()
 
 List domains
 
@@ -447,10 +447,12 @@ import (
 )
 
 func main() {
+	sort := "sort_example" // string | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. (optional) (default to "created_at")
+	order := "order_example" // string | Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. (optional)
 
 	configuration := openapiclient.NewConfiguration()
 	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.DomainsAPI.ListDomains(context.Background()).Execute()
+	resp, r, err := apiClient.DomainsAPI.ListDomains(context.Background()).Sort(sort).Order(order).Execute()
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Error when calling `DomainsAPI.ListDomains``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
@@ -462,12 +464,17 @@ func main() {
 
 ### Path Parameters
 
-This endpoint does not need any parameter.
+
 
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiListDomainsRequest struct via the builder pattern
 
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sort** | **string** | Field to order by. This list holds tens of rows per account, so every column is offered and none needs an index. | [default to &quot;created_at&quot;]
+ **order** | **string** | Defaults to desc for the default field and asc for any other. Always tie-broken on id, so the order is total. | 
 
 ### Return type
 

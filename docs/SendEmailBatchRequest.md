@@ -5,6 +5,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **Messages** | [**[]SendMessage**](SendMessage.md) |  | 
+**Variables** | Pointer to **map[string]string** | Template variables every message in the batch inherits. Each message&#39;s own &#x60;variables&#x60; override these key by key, so shared values are written once and per-recipient ones stay per-recipient.  Without this, a 500-message batch repeats every shared variable 500 times: most of the payload, and 500 places for one of them to differ by a typo.  | [optional] 
 
 ## Methods
 
@@ -44,6 +45,31 @@ and a boolean to check if the value has been set.
 
 SetMessages sets Messages field to given value.
 
+
+### GetVariables
+
+`func (o *SendEmailBatchRequest) GetVariables() map[string]string`
+
+GetVariables returns the Variables field if non-nil, zero value otherwise.
+
+### GetVariablesOk
+
+`func (o *SendEmailBatchRequest) GetVariablesOk() (*map[string]string, bool)`
+
+GetVariablesOk returns a tuple with the Variables field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetVariables
+
+`func (o *SendEmailBatchRequest) SetVariables(v map[string]string)`
+
+SetVariables sets Variables field to given value.
+
+### HasVariables
+
+`func (o *SendEmailBatchRequest) HasVariables() bool`
+
+HasVariables returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)

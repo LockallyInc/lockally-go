@@ -311,7 +311,7 @@ Other parameters are passed through a pointer to a apiGetStorageRequest struct v
 
 ## GetTenantHealth
 
-> map[string]interface{} GetTenantHealth(ctx).Execute()
+> TenantHealthReport GetTenantHealth(ctx).Execute()
 
 Full tenant health report
 
@@ -336,7 +336,7 @@ func main() {
 		fmt.Fprintf(os.Stderr, "Error when calling `DashboardAPI.GetTenantHealth``: %v\n", err)
 		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
 	}
-	// response from `GetTenantHealth`: map[string]interface{}
+	// response from `GetTenantHealth`: TenantHealthReport
 	fmt.Fprintf(os.Stdout, "Response from `DashboardAPI.GetTenantHealth`: %v\n", resp)
 }
 ```
@@ -352,7 +352,7 @@ Other parameters are passed through a pointer to a apiGetTenantHealthRequest str
 
 ### Return type
 
-**map[string]interface{}**
+[**TenantHealthReport**](TenantHealthReport.md)
 
 ### Authorization
 

@@ -23,6 +23,8 @@ var _ MappedNullable = &SendEmailBatchRequest{}
 // SendEmailBatchRequest struct for SendEmailBatchRequest
 type SendEmailBatchRequest struct {
 	Messages []SendMessage `json:"messages"`
+	// Template variables every message in the batch inherits. Each message's own `variables` override these key by key, so shared values are written once and per-recipient ones stay per-recipient.  Without this, a 500-message batch repeats every shared variable 500 times: most of the payload, and 500 places for one of them to differ by a typo. 
+	Variables map[string]string `json:"variables,omitempty"`
 }
 
 type _SendEmailBatchRequest SendEmailBatchRequest
@@ -69,6 +71,38 @@ func (o *SendEmailBatchRequest) SetMessages(v []SendMessage) {
 	o.Messages = v
 }
 
+// GetVariables returns the Variables field value if set, zero value otherwise.
+func (o *SendEmailBatchRequest) GetVariables() map[string]string {
+	if o == nil || IsNil(o.Variables) {
+		var ret map[string]string
+		return ret
+	}
+	return o.Variables
+}
+
+// GetVariablesOk returns a tuple with the Variables field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendEmailBatchRequest) GetVariablesOk() (map[string]string, bool) {
+	if o == nil || IsNil(o.Variables) {
+		return map[string]string{}, false
+	}
+	return o.Variables, true
+}
+
+// HasVariables returns a boolean if a field has been set.
+func (o *SendEmailBatchRequest) HasVariables() bool {
+	if o != nil && !IsNil(o.Variables) {
+		return true
+	}
+
+	return false
+}
+
+// SetVariables gets a reference to the given map[string]string and assigns it to the Variables field.
+func (o *SendEmailBatchRequest) SetVariables(v map[string]string) {
+	o.Variables = v
+}
+
 func (o SendEmailBatchRequest) MarshalJSON() ([]byte, error) {
 	toSerialize,err := o.ToMap()
 	if err != nil {
@@ -80,6 +114,9 @@ func (o SendEmailBatchRequest) MarshalJSON() ([]byte, error) {
 func (o SendEmailBatchRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["messages"] = o.Messages
+	if !IsNil(o.Variables) {
+		toSerialize["variables"] = o.Variables
+	}
 	return toSerialize, nil
 }
 

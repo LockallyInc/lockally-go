@@ -4,14 +4,14 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**MailboxEmail** | **string** |  | 
+**MailboxEmail** | Pointer to **string** |  | [optional] 
 **RecoveryBlob** | **string** |  | 
 
 ## Methods
 
 ### NewCreateEncryptionRecoveryRequest
 
-`func NewCreateEncryptionRecoveryRequest(mailboxEmail string, recoveryBlob string, ) *CreateEncryptionRecoveryRequest`
+`func NewCreateEncryptionRecoveryRequest(recoveryBlob string, ) *CreateEncryptionRecoveryRequest`
 
 NewCreateEncryptionRecoveryRequest instantiates a new CreateEncryptionRecoveryRequest object
 This constructor will assign default values to properties that have it defined,
@@ -45,6 +45,11 @@ and a boolean to check if the value has been set.
 
 SetMailboxEmail sets MailboxEmail field to given value.
 
+### HasMailboxEmail
+
+`func (o *CreateEncryptionRecoveryRequest) HasMailboxEmail() bool`
+
+HasMailboxEmail returns a boolean if a field has been set.
 
 ### GetRecoveryBlob
 

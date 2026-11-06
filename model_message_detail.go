@@ -35,6 +35,10 @@ type MessageDetail struct {
 	UpdatedAt time.Time `json:"updated_at"`
 	BounceReason *string `json:"bounce_reason,omitempty"`
 	SizeBytes *int32 `json:"size_bytes,omitempty"`
+	// The sender's own key/value from the send request. Always present; `{}` when none was set.
+	Metadata map[string]string `json:"metadata,omitempty"`
+	// Grouping labels, lowercased and deduplicated. Always present; `[]` when none were set.
+	Tags []string `json:"tags,omitempty"`
 	From *string `json:"from,omitempty"`
 	To []string `json:"to,omitempty"`
 	Cc []string `json:"cc,omitempty"`
@@ -359,6 +363,70 @@ func (o *MessageDetail) SetSizeBytes(v int32) {
 	o.SizeBytes = &v
 }
 
+// GetMetadata returns the Metadata field value if set, zero value otherwise.
+func (o *MessageDetail) GetMetadata() map[string]string {
+	if o == nil || IsNil(o.Metadata) {
+		var ret map[string]string
+		return ret
+	}
+	return o.Metadata
+}
+
+// GetMetadataOk returns a tuple with the Metadata field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageDetail) GetMetadataOk() (map[string]string, bool) {
+	if o == nil || IsNil(o.Metadata) {
+		return map[string]string{}, false
+	}
+	return o.Metadata, true
+}
+
+// HasMetadata returns a boolean if a field has been set.
+func (o *MessageDetail) HasMetadata() bool {
+	if o != nil && !IsNil(o.Metadata) {
+		return true
+	}
+
+	return false
+}
+
+// SetMetadata gets a reference to the given map[string]string and assigns it to the Metadata field.
+func (o *MessageDetail) SetMetadata(v map[string]string) {
+	o.Metadata = v
+}
+
+// GetTags returns the Tags field value if set, zero value otherwise.
+func (o *MessageDetail) GetTags() []string {
+	if o == nil || IsNil(o.Tags) {
+		var ret []string
+		return ret
+	}
+	return o.Tags
+}
+
+// GetTagsOk returns a tuple with the Tags field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *MessageDetail) GetTagsOk() ([]string, bool) {
+	if o == nil || IsNil(o.Tags) {
+		return nil, false
+	}
+	return o.Tags, true
+}
+
+// HasTags returns a boolean if a field has been set.
+func (o *MessageDetail) HasTags() bool {
+	if o != nil && !IsNil(o.Tags) {
+		return true
+	}
+
+	return false
+}
+
+// SetTags gets a reference to the given []string and assigns it to the Tags field.
+func (o *MessageDetail) SetTags(v []string) {
+	o.Tags = v
+}
+
 // GetFrom returns the From field value if set, zero value otherwise.
 func (o *MessageDetail) GetFrom() string {
 	if o == nil || IsNil(o.From) {
@@ -609,6 +677,12 @@ func (o MessageDetail) ToMap() (map[string]interface{}, error) {
 	}
 	if !IsNil(o.SizeBytes) {
 		toSerialize["size_bytes"] = o.SizeBytes
+	}
+	if !IsNil(o.Metadata) {
+		toSerialize["metadata"] = o.Metadata
+	}
+	if !IsNil(o.Tags) {
+		toSerialize["tags"] = o.Tags
 	}
 	if !IsNil(o.From) {
 		toSerialize["from"] = o.From

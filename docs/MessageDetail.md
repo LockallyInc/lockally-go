@@ -15,6 +15,8 @@ Name | Type | Description | Notes
 **UpdatedAt** | **time.Time** |  | 
 **BounceReason** | Pointer to **string** |  | [optional] 
 **SizeBytes** | Pointer to **int32** |  | [optional] 
+**Metadata** | Pointer to **map[string]string** | The sender&#39;s own key/value from the send request. Always present; &#x60;{}&#x60; when none was set. | [optional] 
+**Tags** | Pointer to **[]string** | Grouping labels, lowercased and deduplicated. Always present; &#x60;[]&#x60; when none were set. | [optional] 
 **From** | Pointer to **string** |  | [optional] 
 **To** | Pointer to **[]string** |  | [optional] 
 **Cc** | Pointer to **[]string** |  | [optional] 
@@ -276,6 +278,56 @@ SetSizeBytes sets SizeBytes field to given value.
 `func (o *MessageDetail) HasSizeBytes() bool`
 
 HasSizeBytes returns a boolean if a field has been set.
+
+### GetMetadata
+
+`func (o *MessageDetail) GetMetadata() map[string]string`
+
+GetMetadata returns the Metadata field if non-nil, zero value otherwise.
+
+### GetMetadataOk
+
+`func (o *MessageDetail) GetMetadataOk() (*map[string]string, bool)`
+
+GetMetadataOk returns a tuple with the Metadata field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetMetadata
+
+`func (o *MessageDetail) SetMetadata(v map[string]string)`
+
+SetMetadata sets Metadata field to given value.
+
+### HasMetadata
+
+`func (o *MessageDetail) HasMetadata() bool`
+
+HasMetadata returns a boolean if a field has been set.
+
+### GetTags
+
+`func (o *MessageDetail) GetTags() []string`
+
+GetTags returns the Tags field if non-nil, zero value otherwise.
+
+### GetTagsOk
+
+`func (o *MessageDetail) GetTagsOk() (*[]string, bool)`
+
+GetTagsOk returns a tuple with the Tags field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetTags
+
+`func (o *MessageDetail) SetTags(v []string)`
+
+SetTags sets Tags field to given value.
+
+### HasTags
+
+`func (o *MessageDetail) HasTags() bool`
+
+HasTags returns a boolean if a field has been set.
 
 ### GetFrom
 

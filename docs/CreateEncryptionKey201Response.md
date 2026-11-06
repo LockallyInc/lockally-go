@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 **Id** | Pointer to **string** |  | [optional] 
 **MailboxId** | Pointer to **string** |  | [optional] 
 **CreatedAt** | Pointer to **time.Time** |  | [optional] 
+**ReplacedOld** | Pointer to **bool** |  | [optional] 
 
 ## Methods
 
@@ -101,6 +102,31 @@ SetCreatedAt sets CreatedAt field to given value.
 `func (o *CreateEncryptionKey201Response) HasCreatedAt() bool`
 
 HasCreatedAt returns a boolean if a field has been set.
+
+### GetReplacedOld
+
+`func (o *CreateEncryptionKey201Response) GetReplacedOld() bool`
+
+GetReplacedOld returns the ReplacedOld field if non-nil, zero value otherwise.
+
+### GetReplacedOldOk
+
+`func (o *CreateEncryptionKey201Response) GetReplacedOldOk() (*bool, bool)`
+
+GetReplacedOldOk returns a tuple with the ReplacedOld field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetReplacedOld
+
+`func (o *CreateEncryptionKey201Response) SetReplacedOld(v bool)`
+
+SetReplacedOld sets ReplacedOld field to given value.
+
+### HasReplacedOld
+
+`func (o *CreateEncryptionKey201Response) HasReplacedOld() bool`
+
+HasReplacedOld returns a boolean if a field has been set.
 
 
 [[Back to Model list]](../README.md#documentation-for-models) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to README]](../README.md)
