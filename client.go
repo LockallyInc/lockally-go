@@ -1,7 +1,7 @@
 /*
-lockally control plane
+Lockally API
 
-The lockally control plane lets integrators and direct customers manage everything except actual mail data flow (which uses standard JMAP / IMAP / SMTP-submission against the data plane endpoints).  **Authentication.** All `/v1/_*` endpoints require a Bearer API key in the `Authorization` header. Keys are formatted `lk_live_<8-char-prefix>_<32-char-secret>`, or `lk_test_<...>` for a test key. Create keys in the dashboard, or with `POST /v1/api-keys` using a key that holds `tenant:admin`.  The key's plan is checked on every request, so a key stops working if the account moves to a plan without API access, and works again if it moves back.  **Errors.** Failures return [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) `application/problem+json` documents.  **Scopes.** Each endpoint requires a specific scope on the presented key. Insufficient scope returns `403` with the required scope name in `detail`. 
+Official Lockally SDK for Go: send email and manage mailboxes, domains and webhooks through the Lockally API.  **Authentication.** All `/v1/_*` endpoints require a Bearer API key in the `Authorization` header. Keys are formatted `lk_live_<8-char-prefix>_<32-char-secret>`, or `lk_test_<...>` for a test key. Create keys in the dashboard, or with `POST /v1/api-keys` using a key that holds `tenant:admin`.  The key's plan is checked on every request, so a key stops working if the account moves to a plan without API access, and works again if it moves back.  **Errors.** Failures return [RFC 9457](https://www.rfc-editor.org/rfc/rfc9457) `application/problem+json` documents.  **Scopes.** Each endpoint requires a specific scope on the presented key. Insufficient scope returns `403` with the required scope name in `detail`. 
 
 API version: 0.1.0
 Contact: support@lockally.com
@@ -43,7 +43,7 @@ var (
 	queryDescape    = strings.NewReplacer( "%5B", "[", "%5D", "]" )
 )
 
-// APIClient manages communication with the lockally control plane API v0.1.0
+// APIClient manages communication with the Lockally API API v0.1.0
 // In most cases there should be only one, shared, APIClient.
 type APIClient struct {
 	cfg    *Configuration

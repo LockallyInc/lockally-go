@@ -194,7 +194,6 @@ docs/ListSharedMembers200Response.md
 docs/ListSuppressions200Response.md
 docs/ListTemplates200Response.md
 docs/ListUsers200Response.md
-docs/ListVacationResponders200Response.md
 docs/ListWebhooks200Response.md
 docs/Mailbox.md
 docs/MailboxGrant.md
@@ -238,7 +237,6 @@ docs/SendEmailBatchRequest.md
 docs/SendEmailRequest.md
 docs/SendEmailRequestAttachmentsInner.md
 docs/SendMessage.md
-docs/SetVacationResponderRequest.md
 docs/SharedMember.md
 docs/SignupAPI.md
 docs/SignupRequest.md
@@ -285,8 +283,6 @@ docs/UpdateWebhookRequest.md
 docs/User.md
 docs/UserEvent.md
 docs/UsersAPI.md
-docs/VacationParams.md
-docs/VacationResponder.md
 docs/Webhook.md
 docs/WebhooksAPI.md
 docs/Whoami.md
@@ -435,7 +431,6 @@ model_list_shared_members_200_response.go
 model_list_suppressions_200_response.go
 model_list_templates_200_response.go
 model_list_users_200_response.go
-model_list_vacation_responders_200_response.go
 model_list_webhooks_200_response.go
 model_mailbox.go
 model_mailbox_grant.go
@@ -475,7 +470,6 @@ model_send_email_batch_request.go
 model_send_email_request.go
 model_send_email_request_attachments_inner.go
 model_send_message.go
-model_set_vacation_responder_request.go
 model_shared_member.go
 model_signup_request.go
 model_simulated_inbound.go
@@ -516,8 +510,6 @@ model_update_user_request.go
 model_update_webhook_request.go
 model_user.go
 model_user_event.go
-model_vacation_params.go
-model_vacation_responder.go
 model_webhook.go
 model_whoami.go
 model_whoami_key.go

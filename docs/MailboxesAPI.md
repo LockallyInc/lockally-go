@@ -7,16 +7,12 @@ Method | HTTP request | Description
 [**AddSharedMember**](MailboxesAPI.md#AddSharedMember) | **Post** /v1/mailboxes/{email}/members | Add a shared mailbox member
 [**CreateMailbox**](MailboxesAPI.md#CreateMailbox) | **Post** /v1/mailboxes | Create a mailbox
 [**DeleteMailbox**](MailboxesAPI.md#DeleteMailbox) | **Delete** /v1/mailboxes/{email} | Soft-delete a mailbox
-[**DeleteVacationResponder**](MailboxesAPI.md#DeleteVacationResponder) | **Delete** /v1/mailboxes/{email}/vacation | Remove the vacation responder
 [**DownloadMailboxExport**](MailboxesAPI.md#DownloadMailboxExport) | **Get** /v1/mailboxes/{email}/export/download | Download a previously-issued mailbox export
 [**ExportMailbox**](MailboxesAPI.md#ExportMailbox) | **Post** /v1/mailboxes/{email}/export | Request a mailbox export
 [**GetMailbox**](MailboxesAPI.md#GetMailbox) | **Get** /v1/mailboxes/{email} | Get a mailbox
-[**GetVacationResponder**](MailboxesAPI.md#GetVacationResponder) | **Get** /v1/mailboxes/{email}/vacation | Get the vacation responder
 [**ListMailboxes**](MailboxesAPI.md#ListMailboxes) | **Get** /v1/mailboxes | List mailboxes
 [**ListSharedMembers**](MailboxesAPI.md#ListSharedMembers) | **Get** /v1/mailboxes/{email}/members | List shared mailbox members
-[**ListVacationResponders**](MailboxesAPI.md#ListVacationResponders) | **Get** /v1/vacation | List all vacation responders
 [**RemoveSharedMember**](MailboxesAPI.md#RemoveSharedMember) | **Delete** /v1/mailboxes/{email}/members/{memberEmail} | Remove a shared mailbox member
-[**SetVacationResponder**](MailboxesAPI.md#SetVacationResponder) | **Put** /v1/mailboxes/{email}/vacation | Set the vacation responder
 [**UpdateMailbox**](MailboxesAPI.md#UpdateMailbox) | **Patch** /v1/mailboxes/{email} | Update a mailbox
 
 
@@ -201,74 +197,6 @@ Name | Type | Description  | Notes
 ### Other Parameters
 
 Other parameters are passed through a pointer to a apiDeleteMailboxRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
- (empty response body)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/problem+json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## DeleteVacationResponder
-
-> DeleteVacationResponder(ctx, email).Execute()
-
-Remove the vacation responder
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/lockallyinc/lockally-go"
-)
-
-func main() {
-	email := "email_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	r, err := apiClient.MailboxesAPI.DeleteVacationResponder(context.Background(), email).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `MailboxesAPI.DeleteVacationResponder``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**email** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiDeleteVacationResponderRequest struct via the builder pattern
 
 
 Name | Type | Description  | Notes
@@ -503,76 +431,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## GetVacationResponder
-
-> VacationResponder GetVacationResponder(ctx, email).Execute()
-
-Get the vacation responder
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/lockallyinc/lockally-go"
-)
-
-func main() {
-	email := "email_example" // string | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MailboxesAPI.GetVacationResponder(context.Background(), email).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `MailboxesAPI.GetVacationResponder``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `GetVacationResponder`: VacationResponder
-	fmt.Fprintf(os.Stdout, "Response from `MailboxesAPI.GetVacationResponder`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**email** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiGetVacationResponderRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
-
-### Return type
-
-[**VacationResponder**](VacationResponder.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json, application/problem+json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## ListMailboxes
 
 > ListMailboxes200Response ListMailboxes(ctx).Limit(limit).Execute()
@@ -707,67 +565,6 @@ Name | Type | Description  | Notes
 [[Back to README]](../README.md)
 
 
-## ListVacationResponders
-
-> ListVacationResponders200Response ListVacationResponders(ctx).Execute()
-
-List all vacation responders
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/lockallyinc/lockally-go"
-)
-
-func main() {
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MailboxesAPI.ListVacationResponders(context.Background()).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `MailboxesAPI.ListVacationResponders``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `ListVacationResponders`: ListVacationResponders200Response
-	fmt.Fprintf(os.Stdout, "Response from `MailboxesAPI.ListVacationResponders`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-This endpoint does not need any parameter.
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiListVacationRespondersRequest struct via the builder pattern
-
-
-### Return type
-
-[**ListVacationResponders200Response**](ListVacationResponders200Response.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: Not defined
-- **Accept**: application/json, application/problem+json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
 ## RemoveSharedMember
 
 > RemoveSharedMember(ctx, email, memberEmail).Execute()
@@ -831,78 +628,6 @@ Name | Type | Description  | Notes
 
 - **Content-Type**: Not defined
 - **Accept**: application/problem+json
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
-[[Back to Model list]](../README.md#documentation-for-models)
-[[Back to README]](../README.md)
-
-
-## SetVacationResponder
-
-> VacationResponder SetVacationResponder(ctx, email).SetVacationResponderRequest(setVacationResponderRequest).Execute()
-
-Set the vacation responder
-
-
-
-### Example
-
-```go
-package main
-
-import (
-	"context"
-	"fmt"
-	"os"
-	openapiclient "github.com/lockallyinc/lockally-go"
-)
-
-func main() {
-	email := "email_example" // string | 
-	setVacationResponderRequest := *openapiclient.NewSetVacationResponderRequest(*openapiclient.NewVacationParams("Out of office until June 5", "Hi! I'm away until June 5. For urgent matters please contact ...")) // SetVacationResponderRequest | 
-
-	configuration := openapiclient.NewConfiguration()
-	apiClient := openapiclient.NewAPIClient(configuration)
-	resp, r, err := apiClient.MailboxesAPI.SetVacationResponder(context.Background(), email).SetVacationResponderRequest(setVacationResponderRequest).Execute()
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "Error when calling `MailboxesAPI.SetVacationResponder``: %v\n", err)
-		fmt.Fprintf(os.Stderr, "Full HTTP response: %v\n", r)
-	}
-	// response from `SetVacationResponder`: VacationResponder
-	fmt.Fprintf(os.Stdout, "Response from `MailboxesAPI.SetVacationResponder`: %v\n", resp)
-}
-```
-
-### Path Parameters
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-**ctx** | **context.Context** | context for authentication, logging, cancellation, deadlines, tracing, etc.
-**email** | **string** |  | 
-
-### Other Parameters
-
-Other parameters are passed through a pointer to a apiSetVacationResponderRequest struct via the builder pattern
-
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
-
- **setVacationResponderRequest** | [**SetVacationResponderRequest**](SetVacationResponderRequest.md) |  | 
-
-### Return type
-
-[**VacationResponder**](VacationResponder.md)
-
-### Authorization
-
-[bearerAuth](../README.md#bearerAuth)
-
-### HTTP request headers
-
-- **Content-Type**: application/json
-- **Accept**: application/json, application/problem+json
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints)
 [[Back to Model list]](../README.md#documentation-for-models)

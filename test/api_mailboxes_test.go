@@ -1,5 +1,5 @@
 /*
-lockally control plane
+Lockally API
 
 Testing MailboxesAPIService
 
@@ -61,19 +61,6 @@ func Test_lockally_MailboxesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test MailboxesAPIService DeleteVacationResponder", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var email string
-
-		httpRes, err := apiClient.MailboxesAPI.DeleteVacationResponder(context.Background(), email).Execute()
-
-		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test MailboxesAPIService DownloadMailboxExport", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -116,20 +103,6 @@ func Test_lockally_MailboxesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test MailboxesAPIService GetVacationResponder", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var email string
-
-		resp, httpRes, err := apiClient.MailboxesAPI.GetVacationResponder(context.Background(), email).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test MailboxesAPIService ListMailboxes", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -156,18 +129,6 @@ func Test_lockally_MailboxesAPIService(t *testing.T) {
 
 	})
 
-	t.Run("Test MailboxesAPIService ListVacationResponders", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		resp, httpRes, err := apiClient.MailboxesAPI.ListVacationResponders(context.Background()).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
 	t.Run("Test MailboxesAPIService RemoveSharedMember", func(t *testing.T) {
 
 		t.Skip("skip test")  // remove to run test
@@ -178,20 +139,6 @@ func Test_lockally_MailboxesAPIService(t *testing.T) {
 		httpRes, err := apiClient.MailboxesAPI.RemoveSharedMember(context.Background(), email, memberEmail).Execute()
 
 		require.Nil(t, err)
-		assert.Equal(t, 200, httpRes.StatusCode)
-
-	})
-
-	t.Run("Test MailboxesAPIService SetVacationResponder", func(t *testing.T) {
-
-		t.Skip("skip test")  // remove to run test
-
-		var email string
-
-		resp, httpRes, err := apiClient.MailboxesAPI.SetVacationResponder(context.Background(), email).Execute()
-
-		require.Nil(t, err)
-		require.NotNil(t, resp)
 		assert.Equal(t, 200, httpRes.StatusCode)
 
 	})

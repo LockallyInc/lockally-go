@@ -1,5 +1,5 @@
 /*
-lockally control plane
+Lockally API
 
 Testing AdminsAPIService
 
