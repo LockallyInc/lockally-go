@@ -23,7 +23,10 @@ var _ MappedNullable = &SendEmailRequest{}
 
 // SendEmailRequest struct for SendEmailRequest
 type SendEmailRequest struct {
+	// Sender address, alone (`orders@acme.com`) or with a display name (`Acme Orders <orders@acme.com>`). Only the address is checked against your sender rules and used as the envelope sender.
 	From string `json:"from"`
+	// Display name recipients see next to `from`, e.g. `Acme Orders`. The same as giving it in `from`; if you do both, the names must match (400 `Conflicting from name`). Cannot contain `@` or control characters. Encoded and quoted for you, so accents, commas and quotes are safe.
+	FromName *string `json:"from_name,omitempty"`
 	To []string `json:"to"`
 	Cc []string `json:"cc,omitempty"`
 	Bcc []string `json:"bcc,omitempty"`
@@ -99,6 +102,38 @@ func (o *SendEmailRequest) GetFromOk() (*string, bool) {
 // SetFrom sets field value
 func (o *SendEmailRequest) SetFrom(v string) {
 	o.From = v
+}
+
+// GetFromName returns the FromName field value if set, zero value otherwise.
+func (o *SendEmailRequest) GetFromName() string {
+	if o == nil || IsNil(o.FromName) {
+		var ret string
+		return ret
+	}
+	return *o.FromName
+}
+
+// GetFromNameOk returns a tuple with the FromName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendEmailRequest) GetFromNameOk() (*string, bool) {
+	if o == nil || IsNil(o.FromName) {
+		return nil, false
+	}
+	return o.FromName, true
+}
+
+// HasFromName returns a boolean if a field has been set.
+func (o *SendEmailRequest) HasFromName() bool {
+	if o != nil && !IsNil(o.FromName) {
+		return true
+	}
+
+	return false
+}
+
+// SetFromName gets a reference to the given string and assigns it to the FromName field.
+func (o *SendEmailRequest) SetFromName(v string) {
+	o.FromName = &v
 }
 
 // GetTo returns the To field value
@@ -680,6 +715,9 @@ func (o SendEmailRequest) MarshalJSON() ([]byte, error) {
 func (o SendEmailRequest) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["from"] = o.From
+	if !IsNil(o.FromName) {
+		toSerialize["from_name"] = o.FromName
+	}
 	toSerialize["to"] = o.To
 	if !IsNil(o.Cc) {
 		toSerialize["cc"] = o.Cc

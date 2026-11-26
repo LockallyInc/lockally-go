@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**From** | **string** |  | 
+**From** | **string** | Sender address, alone (&#x60;orders@acme.com&#x60;) or with a display name (&#x60;Acme Orders &lt;orders@acme.com&gt;&#x60;). Only the address is checked against your sender rules and used as the envelope sender. | 
+**FromName** | Pointer to **string** | Display name recipients see next to &#x60;from&#x60;, e.g. &#x60;Acme Orders&#x60;. The same as giving it in &#x60;from&#x60;; if you do both, the names must match (400 &#x60;Conflicting from name&#x60;). Cannot contain &#x60;@&#x60; or control characters. Encoded and quoted for you, so accents, commas and quotes are safe. | [optional] 
 **To** | **[]string** |  | 
 **Cc** | Pointer to **[]string** |  | [optional] 
 **Bcc** | Pointer to **[]string** |  | [optional] 
@@ -62,6 +63,31 @@ and a boolean to check if the value has been set.
 
 SetFrom sets From field to given value.
 
+
+### GetFromName
+
+`func (o *SendEmailRequest) GetFromName() string`
+
+GetFromName returns the FromName field if non-nil, zero value otherwise.
+
+### GetFromNameOk
+
+`func (o *SendEmailRequest) GetFromNameOk() (*string, bool)`
+
+GetFromNameOk returns a tuple with the FromName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFromName
+
+`func (o *SendEmailRequest) SetFromName(v string)`
+
+SetFromName sets FromName field to given value.
+
+### HasFromName
+
+`func (o *SendEmailRequest) HasFromName() bool`
+
+HasFromName returns a boolean if a field has been set.
 
 ### GetTo
 

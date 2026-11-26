@@ -148,7 +148,7 @@ func (r ApiCreateAiUnitsCheckoutRequest) Execute() (*CreateAiUnitsCheckout200Res
 /*
 CreateAiUnitsCheckout Buy prepaid AI units
 
-Body: {"bundle": "100|500|2000"}. One classification = one unit; bundles expire after 6 months. Admin session required. 503 until Paystack billing is configured.
+Body: {"bundle": "300|1500|6000"}. One classification = one unit; bundles expire after 3 months. Admin session required. 503 until Paystack billing is configured; 409 while prepaid AI units are not available on this server.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @return ApiCreateAiUnitsCheckoutRequest

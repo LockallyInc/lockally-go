@@ -33,7 +33,11 @@ const defaultBaseURL = "https://api.lockally.com"
 // Message mirrors the spec's SendEmailRequest. Zero values are omitted rather
 // than sent as null, so an unset field behaves as absent.
 type Message struct {
-	From        string            `json:"from"`
+	// From is the sender address, alone or as "Acme Orders <orders@acme.com>".
+	From string `json:"from"`
+	// FromName is the display name shown next to From. It must match a name
+	// given in From.
+	FromName    string            `json:"from_name,omitempty"`
 	To          []string          `json:"to"`
 	Subject     string            `json:"subject,omitempty"`
 	Text        string            `json:"text,omitempty"`

@@ -4,7 +4,8 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**From** | **string** |  | 
+**From** | **string** | Sender address, alone or as &#x60;Acme Orders &lt;orders@acme.com&gt;&#x60;. | 
+**FromName** | Pointer to **string** | Display name shown next to &#x60;from&#x60;. Must match a name given in &#x60;from&#x60;. Cannot contain &#x60;@&#x60; or control characters. | [optional] 
 **To** | **[]string** |  | 
 **Cc** | Pointer to **[]string** |  | [optional] 
 **Bcc** | Pointer to **[]string** |  | [optional] 
@@ -58,6 +59,31 @@ and a boolean to check if the value has been set.
 
 SetFrom sets From field to given value.
 
+
+### GetFromName
+
+`func (o *SendMessage) GetFromName() string`
+
+GetFromName returns the FromName field if non-nil, zero value otherwise.
+
+### GetFromNameOk
+
+`func (o *SendMessage) GetFromNameOk() (*string, bool)`
+
+GetFromNameOk returns a tuple with the FromName field if it's non-nil, zero value otherwise
+and a boolean to check if the value has been set.
+
+### SetFromName
+
+`func (o *SendMessage) SetFromName(v string)`
+
+SetFromName sets FromName field to given value.
+
+### HasFromName
+
+`func (o *SendMessage) HasFromName() bool`
+
+HasFromName returns a boolean if a field has been set.
 
 ### GetTo
 

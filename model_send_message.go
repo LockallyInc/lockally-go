@@ -23,7 +23,10 @@ var _ MappedNullable = &SendMessage{}
 
 // SendMessage struct for SendMessage
 type SendMessage struct {
+	// Sender address, alone or as `Acme Orders <orders@acme.com>`.
 	From string `json:"from"`
+	// Display name shown next to `from`. Must match a name given in `from`. Cannot contain `@` or control characters.
+	FromName *string `json:"from_name,omitempty"`
 	To []string `json:"to"`
 	Cc []string `json:"cc,omitempty"`
 	Bcc []string `json:"bcc,omitempty"`
@@ -85,6 +88,38 @@ func (o *SendMessage) GetFromOk() (*string, bool) {
 // SetFrom sets field value
 func (o *SendMessage) SetFrom(v string) {
 	o.From = v
+}
+
+// GetFromName returns the FromName field value if set, zero value otherwise.
+func (o *SendMessage) GetFromName() string {
+	if o == nil || IsNil(o.FromName) {
+		var ret string
+		return ret
+	}
+	return *o.FromName
+}
+
+// GetFromNameOk returns a tuple with the FromName field value if set, nil otherwise
+// and a boolean to check if the value has been set.
+func (o *SendMessage) GetFromNameOk() (*string, bool) {
+	if o == nil || IsNil(o.FromName) {
+		return nil, false
+	}
+	return o.FromName, true
+}
+
+// HasFromName returns a boolean if a field has been set.
+func (o *SendMessage) HasFromName() bool {
+	if o != nil && !IsNil(o.FromName) {
+		return true
+	}
+
+	return false
+}
+
+// SetFromName gets a reference to the given string and assigns it to the FromName field.
+func (o *SendMessage) SetFromName(v string) {
+	o.FromName = &v
 }
 
 // GetTo returns the To field value
@@ -538,6 +573,9 @@ func (o SendMessage) MarshalJSON() ([]byte, error) {
 func (o SendMessage) ToMap() (map[string]interface{}, error) {
 	toSerialize := map[string]interface{}{}
 	toSerialize["from"] = o.From
+	if !IsNil(o.FromName) {
+		toSerialize["from_name"] = o.FromName
+	}
 	toSerialize["to"] = o.To
 	if !IsNil(o.Cc) {
 		toSerialize["cc"] = o.Cc

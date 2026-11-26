@@ -129,3 +129,27 @@ func TestNew_RefusesAnEmptyKey(t *testing.T) {
 		t.Error("an empty API key must be refused up front")
 	}
 }
+
+func TestSend_FromNameGoesOutAsFromName(t *testing.T) {
+	var body map[string]any
+	srv := stubServer(t, 202, map[string]any{"id": "m", "status": "queued"}, nil, &body)
+	defer srv.Close()
+
+	c, _ := New("k", WithBaseURL(srv.URL))
+	if _, err := c.Send(context.Background(), Message{From: "orders@acme.test", FromName: "Acme Orders", To: []string{"c@d.test"}, Text: "x"}); err != nil {
+		t.Fatal(err)
+	}
+	if body["from"] != "orders@acme.test" || body["from_name"] != "Acme Orders" {
+		t.Errorf("from = %v, from_name = %v", body["from"], body["from_name"])
+	}
+
+	// Unset, it is omitted like every other optional field. A fresh map, since
+	// the stub decodes into whatever body already holds.
+	body = nil
+	if _, err := c.Send(context.Background(), Message{From: "a@b.test", To: []string{"c@d.test"}, Text: "x"}); err != nil {
+		t.Fatal(err)
+	}
+	if _, ok := body["from_name"]; ok {
+		t.Error("from_name must be omitted when unset")
+	}
+}

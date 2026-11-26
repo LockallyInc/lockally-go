@@ -365,7 +365,7 @@ func (r ApiCreateReplyDraftRequest) Execute() (*DraftResult, *http.Response, err
 /*
 CreateReplyDraft Propose a reply as a draft
 
-The safe default over /reply: the deterministic policy engine auto-sends clean in-thread replies and holds anything risky (PII, new recipients, injection-flagged threads, always-approve mailboxes) for human approval. Fires draft.pending_approval when held. Idempotency-Key required.
+The safe default over /reply: the deterministic policy engine auto-sends clean in-thread replies and holds anything risky (PII, new recipients, injection-flagged threads, always-approve mailboxes) for human approval. A key with inboxes:draft but not inboxes:write may only propose: its clean drafts are held too, never auto-sent. Fires draft.pending_approval when held. Idempotency-Key required.
 
  @param ctx context.Context - for authentication, logging, cancellation, deadlines, tracing, etc. Passed from http.Request or context.Background().
  @param threadID
